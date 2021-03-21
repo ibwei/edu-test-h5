@@ -6,7 +6,9 @@
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0 -s",
+    "commit": "npx cz"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -33,6 +35,8 @@
     "react": "17.x",
     "react-dom": "17.x",
     "typescript": "^4.1.2",
-    "yorkie": "^2.0.0"
+    "yorkie": "^2.0.0",
+    "commitizen": "^4.2.1",
+    "cz-conventional-changelog": "3.3.0"
   }
 }

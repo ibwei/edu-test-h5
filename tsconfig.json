@@ -18,9 +18,10 @@
   "include": [
     "mock/**/*",
     "src/**/*",
-    "config/**/*",
+    "src/config/**/*",
     ".umirc.ts",
-    "typings.d.ts"
+    "typings.d.ts",
+    "config"
   ],
   "exclude": [
     "node_modules",

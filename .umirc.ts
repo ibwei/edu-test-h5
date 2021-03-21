@@ -1,14 +1,10 @@
 import { defineConfig } from 'umi';
+import routes from './src/config/routes';
 
 export default defineConfig({
-  base: '/',
   publicPath: '/',
-  hash: true,
   history: {
-    type: 'hash',
+    type: 'browser',
   },
-  nodeModulesTransform: {
-    type: 'none',
-  },
-  fastRefresh: {},
+  routes,
 });

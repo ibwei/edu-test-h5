@@ -1,7 +1,11 @@
-export interface TestProps {}
+import { Link } from 'umi';
 
-const Test: React.SFC<TestProps> = () => {
-  return <div>test2</div>;
-};
+function Test() {
+  return (
+    <>
+      <div>test2222222</div>
+    </>
+  );
+}
 
 export default Test;
