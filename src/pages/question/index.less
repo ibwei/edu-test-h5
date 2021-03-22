@@ -1,0 +1,96 @@
+@import url('../../app.less');
+Page {
+  background: @primary-color;
+}
+
+.item-box {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-content: center;
+  padding: 1rem 0.5rem 0.5rem 0.5rem;
+}
+
+.scrollview {
+  display: flex;
+  flex-flow: row nowrap;
+  white-space: nowrap;
+}
+
+.scrollview .question-item {
+  display: inline-block;
+  width: 68rpx;
+  height: 68rpx;
+  color: #eee;
+  border: 1px solid #eee;
+  line-height: 68rpx;
+  font-size: 30rpx;
+  font-weight: 300;
+  border-radius: 50%;
+  text-align: center;
+  background: #fff;
+  margin-right: 0.5rem;
+}
+
+.scrollview .done {
+  background: @primary-color;
+  color: #fff;
+}
+
+.scrollview .current {
+  background: #5070ee;
+  color: #fff;
+  font-weight: normal;
+}
+
+.question-box {
+  background: #fff;
+  margin: 0.5rem 1rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #999;
+  box-shadow: 0px 3px 10px rgba(255, 255, 255, 0.3);
+  padding: 0.2rem;
+  padding-left: 1px;
+  color: #333;
+}
+
+.question-title {
+  padding: 2rem 1rem;
+  line-height: 1.5em;
+  font-size: 0.9rem;
+  padding-bottom: 0.6rem;
+  padding-top: 1rem;
+}
+
+.answer-box {
+  padding: 0rem 0.5rem 0.5rem 0.5rem;
+}
+
+.answer-item {
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  border: 1px solid #ebeef5;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.answer-item.checked {
+  border: 1px solid #fff;
+  background: @primary-color;
+  color: #fff;
+}
+
+.prompt {
+  position: relative;
+  height: 100%;
+  background: #f00;
+}
+
+.button {
+  margin: 2rem;
+}
+
+.at-progress__outer-inner {
+  background-color: @primary-color !important;
+}

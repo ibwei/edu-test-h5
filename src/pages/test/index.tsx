@@ -1,5 +1,6 @@
 import './index.module.less';
 import { connect } from 'dva';
+import { Link } from 'umi';
 export interface TestProps {
   routes: any;
 }
@@ -17,6 +18,14 @@ const Test = (props: any) => {
   return (
     <>
       <div className="test">
+        <h1>路由测试</h1>
+        <div className="state">
+          <Link to="/me">Me Page</Link>
+          <Link to="/test">测试 layout</Link>
+          <Link to="/test/index">测试 Dva</Link>
+          <Link to="/test/test2">子路由测试</Link>
+          <Link to="/tes22t/te33st2/32323">404测试</Link>
+        </div>
         <h1>Test For Dva</h1>
         <div className="state">
           <span>language:{language}</span>
@@ -38,24 +47,24 @@ const Test = (props: any) => {
 };
 
 const mapStatetoprops = (state: any) => ({
-  ...state.user,
+  ...state.app,
 });
 
 const actionCreater = {
   changeLanguage: (payload: string) => ({
-    type: 'user/changeLanguage',
+    type: 'app/changeLanguage',
     payload,
   }),
-  changeVersion: (payload: string) => ({ type: 'user/changeVersion', payload }),
+  changeVersion: (payload: string) => ({ type: 'app/changeVersion', payload }),
   changeState: (payload: { key: string; value: any }) => {
     return {
-      type: 'user/__set',
+      type: 'app/__set',
       payload,
     };
   },
   initLanguage: () => {
     return {
-      type: 'user/initLanguage',
+      type: 'app/initLanguage',
     };
   },
 };

@@ -2,7 +2,9 @@ import { Router } from 'react-router';
 import { IRoute } from 'umi';
 
 const routes: IRoute[] = [
-  { path: '/', component: '@/pages/index' },
+  { path: '/', component: '@/pages/home/index' },
+  { path: '/home', component: '@/pages/home/index', exact: true },
+  { path: '/question', component: '@/pages/question/index', exact: true },
   { path: '/me', component: '@/pages/me/index' },
   {
     path: '/test/',
@@ -12,11 +14,6 @@ const routes: IRoute[] = [
         exact: true,
         path: 'index',
         component: '@/pages/test/index',
-      },
-      {
-        exact: true,
-        path: 'test2',
-        component: '@/pages/test2/index',
       },
     ],
   },
