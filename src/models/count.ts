@@ -1,3 +1,4 @@
+/* 作演示之用 */
 function asyncInit(): Promise<number> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
