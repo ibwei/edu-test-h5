@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { history } from 'umi';
 export default (props: any) => {
   return (
     <div style={{ padding: 20 }}>

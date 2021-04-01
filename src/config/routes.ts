@@ -7,12 +7,13 @@ const routes: IRoute[] = [
   { path: '/question', component: '@/pages/question/index', exact: true },
   { path: '/me', component: '@/pages/me/index' },
   {
-    path: '/test/',
+    path: '/test',
     component: '@/layouts/index',
     routes: [
+      { path: '/test', redirect: '/test/index' },
       {
         exact: true,
-        path: 'index',
+        path: '/test/index',
         component: '@/pages/test/index',
       },
     ],
