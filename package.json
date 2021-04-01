@@ -8,7 +8,8 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0 -s",
-    "commit": "npx cz"
+    "commit": "npx cz",
+    "prepare": "husky install"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -52,7 +53,7 @@
     "commitizen": "^4.2.1",
     "cross-env": "^7.0.2",
     "cz-conventional-changelog": "3.3.0",
-    "husky": "^4.3.8",
+    "husky": "^6.0.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "react": "17.x",
