@@ -11,8 +11,11 @@
     "commit": "npx cz",
     "prepare": "husky install"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E $HUSKY_GIT_PARAMS"
+    }
   },
   "lint-staged": {
     "src/**/*.{js,jsx,less,md,json}": [
@@ -25,12 +28,6 @@
       "eslint --fix",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E $HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   },
   "config": {
     "commitizen": {
@@ -54,7 +51,7 @@
     "cross-env": "^7.0.2",
     "cz-conventional-changelog": "3.3.0",
     "husky": "^6.0.0",
-    "lint-staged": "^10.0.7",
+    "lint-staged": "^10.5.4",
     "prettier": "^2.2.0",
     "react": "17.x",
     "react-dom": "17.x",
