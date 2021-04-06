@@ -8,14 +8,7 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0 -s",
-    "commit": "npx cz",
-    "prepare": "husky install"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E $HUSKY_GIT_PARAMS"
-    }
+    "commit": "npx cz"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,less,md,json}": [
@@ -28,6 +21,12 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E $HUSKY_GIT_PARAMS"
+    }
   },
   "config": {
     "commitizen": {
