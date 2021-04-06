@@ -1,30 +1,50 @@
-function asyncInit(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve('zhCN');
-    }, 1000);
+import { UserType } from '@/@types/user';
+import UserService, { LoginParams } from '@/api/user';
+import { HttpResponse } from '@/@types/api';
+import { message } from 'antd';
+import { history } from 'umi';
+
+// 用户登录
+const userLoginAction = async (
+  form: LoginParams,
+): Promise<HttpResponse<UserStateType>> => {
+  const res = await UserService.login({
+    username: form.username,
+    password: form.password,
   });
-}
-export default {
+  if (res?.status === 200) {
+    if (res.data.resultCode === 0) {
+      message.success(res.data.resultMessage);
+      history.push('/home');
+      return res;
+    }
+  }
+  return res;
+};
+
+const UserState = {
   namespace: 'user', // 可省略
   state: {
-    language: 'zhCN',
-    theme: 'light',
-    version: '0.0.1',
-    fullLoading: false,
-    loadingText: 'Loading...',
-    currentActiveNav: '解决方案',
+    token: '',
+    user: {} as UserType,
   }, // 初始状态：缓存或空数组
-
   effects: {
-    // generactor 这玩意还再用，我也是醉了
-    //这个执行异步操作，这玩意是* 生成器函数？？
-    *initLanguage(
-      action: any,
-      { call, put }: { call: Function; put: Function },
-    ) {
-      let payload: string = yield call(asyncInit);
-      yield put({ type: 'changeLanguage', payload });
+    *userLogin(
+      action: { payload: LoginParams },
+      { call, put }: { call: any; put: any },
+    ): any {
+      const res = yield call(userLoginAction, action.payload);
+      console.log('🚀 ~ file: user.ts ~ line 33 ~ res', res);
+      if (res) {
+        yield put({
+          type: '__set',
+          payload: { key: 'token', value: res.data.data.token },
+        });
+        yield put({
+          type: '__set',
+          payload: { key: 'user', value: res.data.data.user },
+        });
+      }
     },
   },
   reducers: {
@@ -32,14 +52,9 @@ export default {
       const { key, value } = action.payload;
       return { ...state, [key]: value };
     },
-    changeLanguage(state: any, action: any) {
-      return { ...state, language: action.payload };
-    },
-    changeVersion(state: any, action: any) {
-      return { ...state, version: action.payload };
-    },
-    changeTheme(state: any, action: any) {
-      return { ...state, theme: action.payload };
-    },
   },
 };
+
+type UserStateType = typeof UserState.state;
+export { UserStateType };
+export default UserState;
