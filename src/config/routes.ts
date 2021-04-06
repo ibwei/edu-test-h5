@@ -1,4 +1,3 @@
-import { Router } from 'react-router';
 import { IRoute } from 'umi';
 
 const routes: IRoute[] = [
