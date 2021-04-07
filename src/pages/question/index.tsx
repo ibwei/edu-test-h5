@@ -1,36 +1,6 @@
 import { Button, Progress } from 'antd';
 import './index.less';
 
-type Question = {
-  title: string;
-  a_answer: string;
-  a_score: number;
-  b_answer: string;
-  b_score: number;
-  c_answer: string;
-  c_score: number;
-  d_answer: string;
-  d_score: number;
-  e_answer: string;
-  e_score: number;
-  part_id: number;
-};
-type Answer = {
-  label?: string; // 答案内容
-  value: number; // 答案选项索引
-  key: number; // 对应分值
-};
-
-type StateType = {
-  buttonShow: boolean; // 是否展示按钮
-  currentQuestionPartName: string; // 当前问题所属模块
-  nowIndex: number; // 当前题目索引
-  answerArray: Array<any>; // 答案数组
-  doneQuestion: Array<boolean>; // 做过的题目数组
-  chooesAnswer: Answer; //选择的答案
-  currentQuestion: string; // 当前题目
-  currentAnswerList: Array<Answer>; // 当前问题答案选项数组
-};
 export default function QuestionPage() {
   /*       buttonShow: false, // 按钮是否禁用
       answerArray: [],
@@ -334,10 +304,8 @@ export default function QuestionPage() {
 
   const Threshold = 20;
   return (
-    <div>
-      <Progress
-      // percent={this.state.nowIndex * 2 + 2}
-      />
+    <div className="question-container">
+      <div className="scroll-container"></div>
       <div className="question">
         <div className="item-box">
           {/*    <Scrolldiv

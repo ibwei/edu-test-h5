@@ -9,9 +9,6 @@ export default function HomePage() {
   const [hasUnCompleteTask, setHasUnCompleteTask] = useState(false);
   const [infoShow, setInfoShow] = useState(false);
 
-  console.log('env', process.env);
-  console.log('env', ENV_CONFIG);
-
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -210,7 +207,13 @@ export default function HomePage() {
         <Button size="large" className="start-btn" onClick={navToQuestionPage}>
           开始测试
         </Button>
-        <Button size="large" className="btn1">
+        <Button
+          size="large"
+          className="btn1"
+          onClick={() => {
+            history.push('/analysis');
+          }}
+        >
           查看结果
         </Button>
       </div>

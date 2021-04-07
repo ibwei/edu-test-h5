@@ -1,5 +1,7 @@
 import Axios, { AxiosResponse, AxiosRequestConfig, AxiosError } from 'axios';
 import { message } from 'antd';
+import { history } from '@/.umi/core/history';
+import Cookies from 'js-cookie';
 
 export function throwMessage<T = any>(responsePromise: Promise<T>) {
   return responsePromise.catch((e: Error) => {
@@ -100,40 +102,25 @@ service.interceptors.response.use(
   },
   /** 请求无响应,统一处理接口错误 */
   (error: AxiosError) => {
-    let __emsg: string = error.message || '';
-
-    if (error.message) {
-      __emsg = error.message;
-    }
-
-    if (error.response) {
-      __emsg = error.response.data.message
-        ? error.response.data.message
-        : error.response.data.data;
-    }
-    // timeout
-    if (__emsg.indexOf('timeout') >= 0) {
+    // 优先处理超时的情况
+    let __emsg = '';
+    if (error?.message?.indexOf('timeout') >= 0) {
       __emsg = '请求已经超时，请稍后再试！';
+      message.error(__emsg);
+      return throwMessage(Promise.reject(__emsg));
     }
 
-    /* if (error?.response?.status === 401) {
-      if (!store.state.console.expired) {
-        message.info('登录凭证已过期，请重新登录！');
-      }
-      history.push('/entry/login');
-      // 更新登录过期标识
-      // setStoreState('console', 'expired', true);
+    // 处理服务器异常的情况
+    __emsg = getErrorCode2text(error.response as any);
+
+    if (error?.response?.status === 401) {
+      message.info('登录凭证已过期，请重新登录！');
+      history.push('/user/login');
+      Cookies.remove('token');
       return throwMessage(Promise.reject(__emsg));
-    } */
+    }
 
-    /**
-     * 处理消息提示重复的问题
-     * 403 - 没有系统权限
-     * 400 - 项目信息未查到，及当前用户没有项目权限
-     * NOTE: 这里其实和具体业务没有关系，只是处理同时请求多次接口错误引起多次弹出错误提示
-     */
-    // 处理消息提示重复的问题
-
+    // 通用情况处理
     message.error(__emsg);
     return throwMessage(Promise.reject(__emsg));
   },

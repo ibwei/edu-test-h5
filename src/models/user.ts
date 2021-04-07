@@ -3,6 +3,10 @@ import UserService, { LoginParams } from '@/api/user';
 import { HttpResponse } from '@/@types/api';
 import { message } from 'antd';
 import { history } from 'umi';
+import Cookies from 'js-cookie';
+import { Dispatch } from '../.umi/plugin-dva/connect';
+import { History } from 'history';
+import { noAuthRoutes } from '../config/permission.config';
 
 // 用户登录
 const userLoginAction = async (
@@ -15,7 +19,6 @@ const userLoginAction = async (
   if (res?.status === 200) {
     if (res.data.resultCode === 0) {
       message.success(res.data.resultMessage);
-      history.push('/home');
       return res;
     }
   }
@@ -34,7 +37,6 @@ const UserState = {
       { call, put }: { call: any; put: any },
     ): any {
       const res = yield call(userLoginAction, action.payload);
-      console.log('🚀 ~ file: user.ts ~ line 33 ~ res', res);
       if (res) {
         yield put({
           type: '__set',
@@ -44,6 +46,9 @@ const UserState = {
           type: '__set',
           payload: { key: 'user', value: res.data.data.user },
         });
+        yield Cookies.set('token', res.data.data.token);
+        yield history.push('/home');
+        return res;
       }
     },
   },
@@ -51,6 +56,19 @@ const UserState = {
     __set(state: any, action: { payload: { key: string; value: any } }) {
       const { key, value } = action.payload;
       return { ...state, [key]: value };
+    },
+  },
+  subscriptions: {
+    setup({ history }: { history: History }) {
+      history.listen(({ pathname }) => {
+        if (!noAuthRoutes.includes(pathname)) {
+          const isLogin = Cookies.get('token');
+          if (!isLogin) {
+            message.info('请先登录');
+            history.push('/user/login');
+          }
+        }
+      });
     },
   },
 };

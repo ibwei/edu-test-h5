@@ -33,7 +33,9 @@ export interface UserLoginPageProps {
 }
 
 const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
-  const { dispatchByKey, user, loading } = props;
+  const { dispatchByKey, loading } = props;
+
+  console.log(props);
 
   const layout = {
     labelCol: { span: 8 },
@@ -46,8 +48,9 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
   // 登录事件
   const onFinish = async (form: any) => {
     try {
-      await dispatchByKey(form);
-    } finally {
+      dispatchByKey(form);
+    } catch (e) {
+      console.log(e);
     }
   };
 

@@ -8,4 +8,9 @@ interface HttpResponse<T> {
   };
 }
 
-export { HttpResponse };
+interface HttpRequest {
+  pageSize?: number;
+  pageNum?: number;
+}
+
+export { HttpResponse, HttpRequest };

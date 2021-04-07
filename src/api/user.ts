@@ -2,7 +2,7 @@
  * 所有跟用户相关的接口
  */
 
-import { HttpResponse } from '@/@types/api';
+import { HttpRequest, HttpResponse } from '@/@types/api';
 import { UserStateType } from '@/models/user';
 import Axios from './axios';
 
@@ -31,6 +31,18 @@ class UserService {
       method: 'post',
       responseType: 'json',
       data: params,
+    });
+  }
+
+  // 获取用户的历史提交记录
+  static async submitHistory(params: HttpRequest) {
+    return Axios({
+      url: '/wechat/test/history',
+      method: 'post',
+      responseType: 'json',
+      data: {
+        ...params,
+      },
     });
   }
 }
