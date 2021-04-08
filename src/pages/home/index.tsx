@@ -187,7 +187,7 @@ export default function HomePage() {
         </div>
         <div className="introduce">
           <div className="content">
-            <span>拾加拾教育：学商测试</span>
+            <span>树人教育：学商测试</span>
           </div>
           <div className="content">
             <span>测试内容：考察学生各方面能力</span>
@@ -207,7 +207,13 @@ export default function HomePage() {
         <Button size="large" className="start-btn" onClick={navToQuestionPage}>
           开始测试
         </Button>
-        <Button size="large" className="btn1">
+        <Button
+          size="large"
+          className="btn1"
+          onClick={() => {
+            history.push('/analysis');
+          }}
+        >
           查看结果
         </Button>
       </div>
@@ -222,7 +228,7 @@ export default function HomePage() {
 
       <Modal visible={false} okText="微信授权" cancelText="取消">
         <div className="tishi-img">
-          <img src={require('../../assets/images/tree.png')} />
+          <img src={require('../../assets/images/tree.png')} width="100%" />
         </div>
         <div className="quanxian-content">学商测试申请获得以下权限：</div>
         <div className="quanxian">获得你的公开信息(昵称、头像等)</div>

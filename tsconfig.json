@@ -6,6 +6,8 @@
     "importHelpers": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
     "sourceMap": true,
     "baseUrl": "./",
     "strict": true,

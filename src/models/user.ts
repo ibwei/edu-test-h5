@@ -1,45 +1,98 @@
-function asyncInit(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve('zhCN');
-    }, 1000);
-  });
+import { UserType } from '@/@types/user';
+import UserService, { LoginParams } from '@/api/user';
+import { HttpResponse } from '@/@types/api';
+import { message } from 'antd';
+import { Effect, history, Reducer, Subscription } from 'umi';
+import Cookies from 'js-cookie';
+import { History } from 'history';
+import { noAuthRoutes } from '../config/permission.config';
+
+type UserStateType = {
+  token: string;
+  user: UserType;
+};
+export interface IUserModel {
+  namespace: 'user';
+  state: UserStateType;
+  effects: {
+    // 获取当前用户信息
+    userLogin: Effect;
+  };
+  reducers: {
+    save: Reducer<UserStateType>;
+    __set: Reducer<UserStateType>;
+  };
+  subscriptions: {
+    setup: Subscription;
+  };
 }
-export default {
+
+// 用户登录
+const userLoginAction = async (
+  form: LoginParams,
+): Promise<HttpResponse<UserStateType>> => {
+  const res = await UserService.login({
+    username: form.username,
+    password: form.password,
+  });
+  if (res?.status === 200) {
+    if (res.data.resultCode === 0) {
+      message.success(res.data.resultMessage);
+      return res;
+    }
+  }
+  return res;
+};
+
+const UserState: IUserModel = {
   namespace: 'user', // 可省略
   state: {
-    language: 'zhCN',
-    theme: 'light',
-    version: '0.0.1',
-    fullLoading: false,
-    loadingText: 'Loading...',
-    currentActiveNav: '解决方案',
+    token: '',
+    user: {} as UserType,
   }, // 初始状态：缓存或空数组
-
   effects: {
-    // generactor 这玩意还再用，我也是醉了
-    //这个执行异步操作，这玩意是* 生成器函数？？
-    *initLanguage(
-      action: any,
-      { call, put }: { call: Function; put: Function },
-    ) {
-      let payload: string = yield call(asyncInit);
-      yield put({ type: 'changeLanguage', payload });
+    *userLogin({ payload }, { call, put }: { call: any; put: any }): any {
+      const res = yield call(userLoginAction, payload.data);
+      if (res) {
+        yield put({
+          type: '__set',
+          payload: { key: 'token', value: res.data.data.token },
+        });
+        yield put({
+          type: '__set',
+          payload: { key: 'user', value: res.data.data.user },
+        });
+        const { resolve } = payload;
+        resolve(res);
+      }
     },
   },
   reducers: {
-    __set(state: any, action: { payload: { key: string; value: any } }) {
-      const { key, value } = action.payload;
+    save(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+      };
+    },
+    __set(state: any, { payload }) {
+      const { key, value } = payload;
       return { ...state, [key]: value };
     },
-    changeLanguage(state: any, action: any) {
-      return { ...state, language: action.payload };
-    },
-    changeVersion(state: any, action: any) {
-      return { ...state, version: action.payload };
-    },
-    changeTheme(state: any, action: any) {
-      return { ...state, theme: action.payload };
+  },
+  subscriptions: {
+    setup({ history }: { history: History }) {
+      history.listen(({ pathname }) => {
+        if (!noAuthRoutes.includes(pathname)) {
+          const isLogin = Cookies.get('token');
+          if (!isLogin) {
+            message.info('请先登录');
+            history.push('/user/login');
+          }
+        }
+      });
     },
   },
 };
+
+export { UserStateType };
+export default UserState;

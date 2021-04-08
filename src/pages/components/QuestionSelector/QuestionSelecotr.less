@@ -1,0 +1,20 @@
+.question-selector {
+  height: auto;
+  width: 100%;
+  .progrees {
+    margin: 0 10px;
+  }
+  .question-scroll-container {
+    margin: 10px 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    /*解决ios上滑动不流畅*/
+    /*-webkit-overflow-scrolling: touch;*/
+    /*利用padding将滚动条挤出：纵向超出部分将会隐藏，即滚动条部分被挤出可视区域*/
+  }
+}
