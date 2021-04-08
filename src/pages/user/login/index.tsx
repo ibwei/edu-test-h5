@@ -1,9 +1,9 @@
 import { Form, Input, Button } from 'antd';
-import { connect } from '@/.umi/plugin-dva/exports';
+import { connect, history, Loading, getDvaApp, useDispatch } from 'umi';
 import { UserStateType } from '@/models/user';
-import { LoginParams } from '../../../api/user';
-import { Loading } from '../../../.umi/plugin-dva/connect';
 import styles from './login.less';
+import { HttpResponse } from '@/@types/api';
+import Cookies from 'js-cookie';
 
 const mapStateToProps = ({
   user,
@@ -19,21 +19,15 @@ const mapStateToProps = ({
   };
 };
 
-const actionCreater = {
-  dispatchByKey: (payload: LoginParams): any => ({
-    type: 'user/userLogin',
-    payload,
-  }),
-};
-
 export interface UserLoginPageProps {
-  dispatchByKey: typeof actionCreater.dispatchByKey;
   user: any;
   loading: Loading;
 }
 
 const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
-  const { dispatchByKey, loading } = props;
+  const { loading } = props;
+
+  const dispatch = useDispatch();
 
   console.log(props);
 
@@ -45,13 +39,32 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
     wrapperCol: { offset: 8, span: 16 },
   };
 
+  // 登陆成功之后的 callback
+  const submitCallback = (res: HttpResponse<UserStateType>) => {
+    console.log('ahahahaha');
+    if (res?.status === 200) {
+      if (res.data.resultCode === 0) {
+        Cookies.set('token', res.data.data.token);
+        history.push('/home');
+      }
+    }
+  };
+
   // 登录事件
   const onFinish = async (form: any) => {
-    try {
-      dispatchByKey(form);
-    } catch (e) {
-      console.log(e);
-    }
+    new Promise((resolve, reject) => {
+      dispatch({
+        type: 'user/userLogin',
+        payload: { data: form, resolve, reject },
+      });
+    }).then((res: any) => {
+      if (res?.status === 200) {
+        if (res.data.resultCode === 0) {
+          Cookies.set('token', res.data.data.token);
+          history.push('/home');
+        }
+      }
+    });
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -97,4 +110,4 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
   );
 };
 
-export default connect(mapStateToProps, actionCreater)(UserLoginPage);
+export default connect(mapStateToProps)(UserLoginPage);

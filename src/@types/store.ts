@@ -1,3 +1,5 @@
+import { EffectsCommandMap } from 'dva';
+import { Subscription, UserStateType } from 'umi';
 // 跟 dva 模块相关
 type ModuleName = 'app' | 'user';
 
@@ -16,3 +18,19 @@ const actionCreater = {
 };
 
 export { actionCreater };
+
+export interface NModel<S> {
+  namespace: string;
+  state?: S;
+  reducers?: {
+    [key: string]: (state: S, action: any) => void;
+  };
+  effects?: {
+    [key: string]: (action: any, effects: EffectsCommandMap) => void;
+  };
+  subscriptions?: Subscription;
+}
+
+export interface GlobalStateType {
+  user: UserStateType;
+}

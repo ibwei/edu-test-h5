@@ -2,11 +2,30 @@ import { UserType } from '@/@types/user';
 import UserService, { LoginParams } from '@/api/user';
 import { HttpResponse } from '@/@types/api';
 import { message } from 'antd';
-import { history } from 'umi';
+import { Effect, history, Reducer, Subscription } from 'umi';
 import Cookies from 'js-cookie';
-import { Dispatch } from '../.umi/plugin-dva/connect';
 import { History } from 'history';
 import { noAuthRoutes } from '../config/permission.config';
+
+type UserStateType = {
+  token: string;
+  user: UserType;
+};
+export interface IUserModel {
+  namespace: 'user';
+  state: UserStateType;
+  effects: {
+    // 获取当前用户信息
+    userLogin: Effect;
+  };
+  reducers: {
+    save: Reducer<UserStateType>;
+    __set: Reducer<UserStateType>;
+  };
+  subscriptions: {
+    setup: Subscription;
+  };
+}
 
 // 用户登录
 const userLoginAction = async (
@@ -25,18 +44,15 @@ const userLoginAction = async (
   return res;
 };
 
-const UserState = {
+const UserState: IUserModel = {
   namespace: 'user', // 可省略
   state: {
     token: '',
     user: {} as UserType,
   }, // 初始状态：缓存或空数组
   effects: {
-    *userLogin(
-      action: { payload: LoginParams },
-      { call, put }: { call: any; put: any },
-    ): any {
-      const res = yield call(userLoginAction, action.payload);
+    *userLogin({ payload }, { call, put }: { call: any; put: any }): any {
+      const res = yield call(userLoginAction, payload.data);
       if (res) {
         yield put({
           type: '__set',
@@ -46,15 +62,20 @@ const UserState = {
           type: '__set',
           payload: { key: 'user', value: res.data.data.user },
         });
-        yield Cookies.set('token', res.data.data.token);
-        yield history.push('/home');
-        return res;
+        const { resolve } = payload;
+        resolve(res);
       }
     },
   },
   reducers: {
-    __set(state: any, action: { payload: { key: string; value: any } }) {
-      const { key, value } = action.payload;
+    save(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+      };
+    },
+    __set(state: any, { payload }) {
+      const { key, value } = payload;
       return { ...state, [key]: value };
     },
   },
@@ -73,6 +94,5 @@ const UserState = {
   },
 };
 
-type UserStateType = typeof UserState.state;
 export { UserStateType };
 export default UserState;

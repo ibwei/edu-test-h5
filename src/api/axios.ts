@@ -37,7 +37,7 @@ const getErrorCode2text = (response: AxiosResponse): string => {
       message = '请求超时';
       break;
     case 500:
-      message = '位置错误';
+      message = '服务器内部发生错误,请联系管理员';
       break;
     case 501:
       message = '承载服务未实现';
@@ -55,7 +55,7 @@ const getErrorCode2text = (response: AxiosResponse): string => {
       message = '暂不支持的 HTTP 版本';
       break;
     default:
-      message = '位置错误';
+      message = '未知错误';
   }
   return message;
 };

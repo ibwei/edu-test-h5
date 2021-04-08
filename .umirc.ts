@@ -13,6 +13,18 @@ export default defineConfig({
   define: {
     ENV_CONFIG: DEVELOPMENT_ENV,
   },
+  theme: {
+    '@primary-color': '#798EDF',
+  },
+  cssLoader: {
+    localsConvention: 'camelCase',
+  },
+  lessLoader: {
+    modifyVars: {
+      // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+      hack: `true; @import "~@/assets/css/theme/default.less";`,
+    },
+  },
   proxy: {
     '/api': {
       target: PRODUCTION_ENV.baseUrl,

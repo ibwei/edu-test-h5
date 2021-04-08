@@ -28,3 +28,25 @@ export interface StateType {
   currentQuestion: string; // 当前题目
   currentAnswerList: Array<Answer>; // 当前问题答案选项数组
 }
+
+const question = {
+  id: 437,
+  title: '',
+  part_id: 6,
+  a_answer: '',
+  a_score: 4,
+  b_answer: '',
+  b_score: 3,
+  c_answer: '',
+  c_score: 2,
+  d_answer: '',
+  d_score: 5,
+  e_answer: '',
+  e_score: 1,
+  status: 1,
+  deleted_at: '',
+  created_at: '',
+  updated_at: '',
+};
+
+export type QuestionItem = typeof question;
