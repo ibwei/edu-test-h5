@@ -10,12 +10,23 @@ export interface QuestionContentProps {
 
 const QuestionContent: FunctionComponent<QuestionContentProps> = (props) => {
   const { currentQuestion }: { currentQuestion: any } = props;
+
+  // key 转换列表
   const translate: any = {
     A: 'a_answer',
     B: 'b_answer',
     C: 'c_answer',
     D: 'd_answer',
     E: 'e_answer',
+  };
+
+  /**
+   * @method 手动选择题目
+   * @param {event} e - 事件委托
+   */
+
+  const changeQuestion = (e: any) => {
+    console.log(e);
   };
 
   const answerList = Object.keys(translate).map((key, index) => {
@@ -27,6 +38,7 @@ const QuestionContent: FunctionComponent<QuestionContentProps> = (props) => {
             : 'answer-item answer-item-active'
         }
         key={index}
+        data-key={index}
       >
         <span>
           {key}.{currentQuestion[translate[key]]}
@@ -41,7 +53,9 @@ const QuestionContent: FunctionComponent<QuestionContentProps> = (props) => {
       <div className="question-title">
         {`${props.index + 1} ${currentQuestion.title}`}
       </div>
-      <div className="answer-box">{answerList}</div>
+      <div className="answer-box" onClick={changeQuestion}>
+        {answerList}
+      </div>
     </div>
   );
 };

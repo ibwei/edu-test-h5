@@ -21,8 +21,10 @@ const Circle: FunctionComponent<CircleProps> = (props: CircleProps) => {
   }, [props.id, props.currentId]);
 
   return (
-    <div className={`circle-container ${type}`}>
-      <span className="number">{props.id + 1}</span>
+    <div className={`circle-container ${type}`} data-key={props.id}>
+      <span data-key={props.id} className="number">
+        {props.id + 1}
+      </span>
     </div>
   );
 };

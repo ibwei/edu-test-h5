@@ -1,23 +1,39 @@
 import { FunctionComponent } from 'react';
 import { Progress } from 'antd';
 import './QuestionSelecotr.less';
-import { useState } from 'react';
 import Circle from '../Circle/Circle';
 
-export interface QuestionSelectorProps {}
+export interface QuestionSelectorProps {
+  percent: number;
+  current: number;
+  setCurrentQuestionIndex: (number: number) => void;
+}
 
-const QuestionSelector: FunctionComponent<QuestionSelectorProps> = () => {
-  const [current, setCurrent] = useState(4);
+const QuestionSelector: FunctionComponent<QuestionSelectorProps> = (props) => {
+  const { setCurrentQuestionIndex, percent } = props;
+
   const list = new Array(50).fill(0);
 
   // 题目序号列表
   const circleList = list.map((n, i) => {
     return (
       <div style={{ marginRight: '10px' }} key={i}>
-        <Circle currentId={current} id={i} />
+        <Circle currentId={props.current} id={i} />
       </div>
     );
   });
+
+  /**
+   * @method 手动选择题目
+   * @param {event} e - 事件委托,切换题目的序号为 e.target.dataset.index
+   */
+
+  const changeQuestion = (e: any) => {
+    if (e.target.dataset.key) {
+      console.log('e', e.target.dataset.key);
+      setCurrentQuestionIndex(Number(e.target.dataset.key));
+    }
+  };
 
   return (
     <div className="question-selector">
@@ -26,10 +42,12 @@ const QuestionSelector: FunctionComponent<QuestionSelectorProps> = () => {
           trailColor="#8DA0EE"
           strokeColor="#A0B1F1"
           showInfo={false}
-          percent={20}
+          percent={percent}
         />
       </div>
-      <div className="question-scroll-container">{circleList}</div>
+      <div className="question-scroll-container" onClick={changeQuestion}>
+        {circleList}
+      </div>
     </div>
   );
 };

@@ -3,20 +3,27 @@ import { history, useStore } from 'umi';
 import QuestionSelector from '../components/QuestionSelector/QuestionSelector';
 import { GlobalStateType } from '../../@types/store';
 import QuestionContent from '../components/QuestionContent/QuestionContent';
-import { useState, useEffect } from 'react';
-import './index.less';
+import { useState, useEffect, useMemo } from 'react';
 import QuestionService from '../../api/question';
 import { QuestionItem } from '../../@types/question';
+import './index.less';
 
 export default function QuestionPage() {
   const store = useStore<GlobalStateType>().getState();
+
   const [loading, setLoading] = useState(true);
 
   // 试题列表
   const [questionList, setQuestionList] = useState<QuestionItem[]>([]);
 
   // 当前正在做的题目Id
-  const [currentQuestionId, setCurrentQuestionId] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
+  // 答题进度
+
+  const donePercent = useMemo(() => {
+    return ((store.question.finishedMap.size / 50) * 100).toFixed(2);
+  }, [store.question.finishedMap.size]);
 
   // 已经做得到了题目Map,key:题号,answer 为答案
   const finishedMap = new Map<number, number>();
@@ -38,9 +45,15 @@ export default function QuestionPage() {
    */
   useEffect(() => {
     getQuestionList().then(() => {
-      setCurrentQuestionId(0);
+      setCurrentQuestionIndex(0);
     });
   }, []);
+
+  /**
+   * @method  提交实体
+   * @description 提交试题
+   */
+  const submitTest = () => {};
 
   return (
     <Spin tip="正在努力加载试题中..." spinning={loading}>
@@ -57,13 +70,18 @@ export default function QuestionPage() {
           />
         </div>
         <div className="scroll-container">
-          <QuestionSelector />
+          <QuestionSelector
+            percent={Number(donePercent)}
+            current={currentQuestionIndex}
+            setCurrentQuestionIndex={setCurrentQuestionIndex}
+          />
         </div>
         <div className="question-content-panel">
           {!loading ? (
             <QuestionContent
-              index={currentQuestionId}
-              currentQuestion={questionList[currentQuestionId]}
+              answer={finishedMap.get(currentQuestionIndex)}
+              index={currentQuestionIndex}
+              currentQuestion={questionList[currentQuestionIndex]}
             />
           ) : null}
         </div>
@@ -73,9 +91,8 @@ export default function QuestionPage() {
             block
             size="large"
             shape="round"
-
-            /*  disabled={!this.state.buttonShow}
-              onClick={this.addAnswer.bind(this)} */
+            disabled={store.question.finishedMap.size !== 50}
+            onClick={submitTest}
           >
             提交
           </Button>
