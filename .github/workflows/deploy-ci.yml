@@ -30,7 +30,7 @@ jobs:
             rm -rf /data/wwwroot/temp
             mkdir /data/wwwroot/temp
             cd /data/wwwroot/temp
-            git clone -b release https://github.com/ibwei/education-test.git
+            git clone  https://github.com/ibwei/education-test.git
             cd /data/wwwroot/temp/education-test
             rm -rf /data/wwwroot/edutest.pinxianhs.com/*
             mv ./* /data/wwwroot/edutest.pinxianhs.com
