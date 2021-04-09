@@ -83,12 +83,15 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
         <Form.Item
           label="Username"
           name="username"
+          initialValue="白唯"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
+          style={{ marginTop: '20px' }}
+          initialValue="admin"
           label="Password"
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}

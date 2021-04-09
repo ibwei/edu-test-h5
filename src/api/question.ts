@@ -3,9 +3,8 @@
  */
 
 import { HttpRequest, HttpResponse } from '@/@types/api';
-import { UserStateType } from '@/models/user';
 import Axios from './axios';
-import { QuestionItem } from '../@types/question';
+import { QuestionItem, PartItem } from '../@types/question';
 
 /**
  * @interface loginParams -登录参数
@@ -16,6 +15,13 @@ import { QuestionItem } from '../@types/question';
 export interface LoginParams {
   username: string;
   password: string;
+}
+
+export interface SubmitTestParams {
+  questionArray: string;
+  answerArray: string;
+  scoreArray: string;
+  allScore: number;
 }
 
 /**
@@ -29,6 +35,25 @@ class QuestionService {
     return Axios('/h5/test/list', {
       method: 'get',
       responseType: 'json',
+    });
+  }
+
+  // 获取版块列表
+  static async getPartList(): Promise<HttpResponse<PartItem[]>> {
+    return Axios('/test/part/list', {
+      method: 'get',
+      responseType: 'json',
+    });
+  }
+
+  // 提交试题
+  static async submitTest(
+    data: SubmitTestParams,
+  ): Promise<HttpResponse<PartItem[]>> {
+    return Axios('/h5/test/add', {
+      method: 'post',
+      responseType: 'json',
+      data,
     });
   }
 }

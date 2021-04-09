@@ -1,4 +1,5 @@
-import { EffectsCommandMap } from 'dva';
+import { QuestionStateType } from '@/models/question';
+import { EffectsCommandMap, SubscriptionsMapObject } from 'dva';
 import { Subscription, UserStateType } from 'umi';
 // 跟 dva 模块相关
 type ModuleName = 'app' | 'user';
@@ -28,9 +29,10 @@ export interface NModel<S> {
   effects?: {
     [key: string]: (action: any, effects: EffectsCommandMap) => void;
   };
-  subscriptions?: Subscription;
+  subscriptions?: SubscriptionsMapObject;
 }
 
 export interface GlobalStateType {
   user: UserStateType;
+  question: QuestionStateType;
 }

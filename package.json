@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "0.0.2",
   "scripts": {
     "start": "umi dev",
     "build": "cross-env UMI_ENV=production umi build",
@@ -29,6 +30,7 @@
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
     "axios": "^0.21.1",
+    "echarts": "^5.0.2",
     "js-cookie": "^2.2.1",
     "osdoc-lint": "^1.0.6",
     "react": "17.x",
