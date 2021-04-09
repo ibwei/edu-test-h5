@@ -81,7 +81,7 @@ const UserState: IUserModel = {
   },
   subscriptions: {
     setup({ history }: { history: History }) {
-      history.listen(({ pathname }) => {
+      return history.listen(({ pathname }) => {
         if (!noAuthRoutes.includes(pathname)) {
           const isLogin = Cookies.get('token');
           if (!isLogin) {

@@ -68,3 +68,19 @@ const part = {
 };
 
 export type PartItem = typeof part;
+
+const history = {
+  allScore: 0,
+  answerArray: '',
+  avatar: '',
+  created_at: '2021-04-09 20:51:42',
+  id: 110,
+  name: '白唯',
+  parent_phone: '',
+  school_name: '',
+  scoreArray: '',
+  status: 0,
+  student_name: '白小唯',
+};
+
+export type HistoryItem = typeof history;

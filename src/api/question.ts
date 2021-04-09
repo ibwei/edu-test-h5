@@ -17,6 +17,13 @@ export interface LoginParams {
   password: string;
 }
 
+export interface SubmitTestParams {
+  questionArray: string;
+  answerArray: string;
+  scoreArray: string;
+  allScore: number;
+}
+
 /**
  * @example Axios.get(`https://xxx.com}`)
  * @todo Get the exchange rate of the current currency
@@ -36,6 +43,17 @@ class QuestionService {
     return Axios('/test/part/list', {
       method: 'get',
       responseType: 'json',
+    });
+  }
+
+  // 提交试题
+  static async submitTest(
+    data: SubmitTestParams,
+  ): Promise<HttpResponse<PartItem[]>> {
+    return Axios('/h5/test/add', {
+      method: 'post',
+      responseType: 'json',
+      data,
     });
   }
 }

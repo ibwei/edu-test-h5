@@ -17,24 +17,11 @@ const routes: IRoute[] = [
     routes: [
       { path: '/analysis', redirect: '/analysis/list' },
       { path: '/analysis/list', component: '@/pages/analysis/list/index' },
-      { path: '/analysis', component: '@/pages/analysis/result/index' },
+      { path: '/analysis/result', component: '@/pages/analysis/result/index' },
     ],
   },
   { path: '/question', component: '@/pages/question/index', exact: true },
   { path: '/me', component: '@/pages/me/index' },
-  {
-    path: '/test',
-    component: '@/layouts/index',
-    routes: [
-      { path: '/test', redirect: '/test/index' },
-      {
-        exact: true,
-        path: '/test/index',
-        component: '@/pages/test/index',
-      },
-    ],
-  },
-  { path: '/hhhahah', component: '@/pages/404/index' },
   { path: '*', component: '@/pages/404/index' },
 ];
 

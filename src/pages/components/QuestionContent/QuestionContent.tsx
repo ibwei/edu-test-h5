@@ -32,7 +32,7 @@ const QuestionContent: FunctionComponent<QuestionContentProps> = (props) => {
   };
 
   /**
-   * @method 答题过程
+   * @method handleQuestionAnswer -  回答了每道题的处理逻辑，将答案保存在数组中，并且自动跳转到下一道题，回答完毕提醒提交
    * @param {event} e - 事件委托
    */
   const handleQuestionAnswer = (e: any) => {

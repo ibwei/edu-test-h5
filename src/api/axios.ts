@@ -112,8 +112,11 @@ service.interceptors.response.use(
 
     // 处理服务器异常的情况
     __emsg = getErrorCode2text(error.response as any);
-
-    if (error?.response?.status === 401) {
+    console.log(error.response?.data);
+    if (
+      error?.response?.status === 401 ||
+      error?.response?.data.message === 'Token has expired'
+    ) {
       message.info('登录凭证已过期，请重新登录！');
       history.push('/user/login');
       Cookies.remove('token');

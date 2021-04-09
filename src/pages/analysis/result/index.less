@@ -26,12 +26,17 @@
 
   .score {
     font-size: 1.5em;
-  }
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
 
-  .score Text {
-    color: #f00;
-    font-size: 1.5em;
-    font-weight: 700;
+    .score-text {
+      color: #f00;
+      font-size: 1.5em;
+      font-weight: 700;
+      margin-right: 10px;
+    }
   }
 
   .title {
@@ -63,13 +68,15 @@
     padding: 20px 10px;
   }
 
-  .forum-content {
+  .forum-content,
+  .result-text {
     color: #555;
     padding: 15px 10px;
     text-indent: 2em;
     line-height: 1.7em;
     font-weight: 200;
   }
+
   .about {
     line-height: 1.7em;
     color: #555;
@@ -79,4 +86,12 @@
   .img {
     text-align: center;
   }
+}
+
+.echarts-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 350px;
 }
