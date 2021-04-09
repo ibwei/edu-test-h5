@@ -3,9 +3,8 @@
  */
 
 import { HttpRequest, HttpResponse } from '@/@types/api';
-import { UserStateType } from '@/models/user';
 import Axios from './axios';
-import { QuestionItem } from '../@types/question';
+import { QuestionItem, PartItem } from '../@types/question';
 
 /**
  * @interface loginParams -登录参数
@@ -27,6 +26,14 @@ class QuestionService {
   // 获取测试试题
   static async getTestQuestionList(): Promise<HttpResponse<QuestionItem[]>> {
     return Axios('/h5/test/list', {
+      method: 'get',
+      responseType: 'json',
+    });
+  }
+
+  // 获取版块列表
+  static async getPartList(): Promise<HttpResponse<PartItem[]>> {
+    return Axios('/test/part/list', {
       method: 'get',
       responseType: 'json',
     });

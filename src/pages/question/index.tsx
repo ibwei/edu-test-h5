@@ -1,5 +1,5 @@
 import { Button, PageHeader, Spin } from 'antd';
-import { history, useStore } from 'umi';
+import { history, useStore, useDispatch } from 'umi';
 import QuestionSelector from '../components/QuestionSelector/QuestionSelector';
 import { GlobalStateType } from '../../@types/store';
 import QuestionContent from '../components/QuestionContent/QuestionContent';
@@ -10,6 +10,8 @@ import './index.less';
 
 export default function QuestionPage() {
   const store = useStore<GlobalStateType>().getState();
+
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +28,6 @@ export default function QuestionPage() {
   }, [store.question.finishedMap.size]);
 
   // 已经做得到了题目Map,key:题号,answer 为答案
-  const finishedMap = new Map<number, number>();
 
   const getQuestionList = async () => {
     try {
@@ -44,6 +45,13 @@ export default function QuestionPage() {
    * @description 获取试题列表,并初始化当前题目为第一道
    */
   useEffect(() => {
+    // 没有试题分类列表，先获取分类列表
+    if (!store.question.partList.length) {
+      dispatch({
+        type: 'question/getPartList',
+      });
+    }
+    // 获取试题列表
     getQuestionList().then(() => {
       setCurrentQuestionIndex(0);
     });
@@ -79,8 +87,9 @@ export default function QuestionPage() {
         <div className="question-content-panel">
           {!loading ? (
             <QuestionContent
-              answer={finishedMap.get(currentQuestionIndex)}
+              setCurrentQuestionIndex={setCurrentQuestionIndex}
               index={currentQuestionIndex}
+              finishedMap={store.question.finishedMap}
               currentQuestion={questionList[currentQuestionIndex]}
             />
           ) : null}

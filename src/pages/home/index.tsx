@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Button, Modal, Input, Form, Divider } from 'antd';
 import { history } from 'umi';
 import './index.less';
+import { useEffect } from 'react';
+import { useDispatch } from 'umi';
 
 export default function HomePage() {
   const [completedInfoBoxShow, setCompletedInfoBoxShow] = useState(false);
@@ -179,6 +181,20 @@ export default function HomePage() {
   const navToQuestionPage = () => {
     history.push('/question');
   };
+
+  /**
+   * @event componentDidMount 生命周期
+   * @description 加载试题分类列表以及分类答案
+   */
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: 'question/getPartList',
+    });
+  }, []);
+
   return (
     <div className="app">
       <div className="index">
