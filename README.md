@@ -5,16 +5,16 @@
 
 # 体验
 
-- [demo H5地址](https://umi-base-deploy.vercel.app/)
+- [demo H5地址](http://edutest.pinxianhs.com/)
 - 该项目从小程序版本重构而来，入口如下
 - ![](https://user-gold-cdn.xitu.io/2020/7/7/173275acdab97da0?w=1052&h=1038&f=png&s=347207)
 
 ## 用到的技术
 
-- [UMI](https://taro.aotu.io/)
-- [DVA](https://taro-ui.jd.com/#/)
+- UMI
+- DVA
 - [echarts](https://github.com/ecomfe/echarts-for-weixin)
-- 后端采用的是 php 的 laravel 框架,[后端仓库地址](https://github.com/ibwei/edu-test-api)
+- 后端采用的是 php 的 laravel 框架,[后端仓库地址](https://github.com/ibwei/edu-test-api) [后续会采用 Node.js的 nest 框架重构]
 
 ## 界面截图
 
