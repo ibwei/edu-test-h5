@@ -69,9 +69,7 @@ const getErrorCode2text = (response: AxiosResponse): string => {
 const service = Axios.create({
   baseURL: ENV_CONFIG.baseUrl,
   timeout: 10000,
-  headers: {
-    'User-Type': 'bus',
-  },
+  headers: {},
 });
 
 /**
@@ -80,6 +78,7 @@ const service = Axios.create({
  */
 service.interceptors.request.use(async (config: AxiosRequestConfig) => {
   // 不需要token的接口，直接返回
+  config.withCredentials = true;
   return config;
 });
 
