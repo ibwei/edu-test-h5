@@ -17,7 +17,7 @@ export function throwMessage<T = any>(responsePromise: Promise<T>) {
  */
 const getErrorCode2text = (response: AxiosResponse): string => {
   /** http status code */
-  const code = response.status;
+  const code = response?.status;
   /** notice text */
   let message = '请求错误';
   switch (code) {
@@ -55,7 +55,7 @@ const getErrorCode2text = (response: AxiosResponse): string => {
       message = '暂不支持的 HTTP 版本';
       break;
     default:
-      message = '未知错误';
+      message = '网络请求发生未知错误';
   }
   return message;
 };
@@ -70,7 +70,8 @@ const service = Axios.create({
   baseURL: ENV_CONFIG.baseUrl,
   timeout: 10000,
   headers: {
-    'User-Type': 'bus',
+    'Content-Type': 'application/json;charset=utf-8',
+    withCredentials: true,
   },
 });
 
@@ -79,7 +80,7 @@ const service = Axios.create({
  * @returns {AxiosRequestConfig} config
  */
 service.interceptors.request.use(async (config: AxiosRequestConfig) => {
-  // 不需要token的接口，直接返回
+  config.params = { ...config.params, token: Cookies.get('token') };
   return config;
 });
 
