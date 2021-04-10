@@ -83,6 +83,7 @@ const UserState: IUserModel = {
     setup({ history }: { history: History }) {
       return history.listen(({ pathname }) => {
         if (!noAuthRoutes.includes(pathname)) {
+          console.log('pathname', pathname);
           const isLogin = Cookies.get('token');
           if (!isLogin) {
             message.info('请先登录');

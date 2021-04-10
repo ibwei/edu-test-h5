@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useState, useMemo } from 'react';
 import { Divider, PageHeader } from 'antd';
 import { HistoryItem } from '../../../@types/question';
 import { useEffect } from 'react';
@@ -71,19 +71,15 @@ const AnalysisPage: FunctionComponent<Props> = (props) => {
     }
   }, []);
 
-  useEffect(() => {
+  const names = useMemo(() => {
     // 构造 nameValueList
-    setNameList(() => {
-      return question.partList.map((item) => {
-        return { name: item.name };
-      });
+    return question.partList.map((item) => {
+      return { name: item.name };
     });
   }, [question.partList]);
 
-  useEffect(() => {
-    setValueList(() => {
-      return userInfo.scoreArray.split('-').map((n) => Number(n));
-    });
+  const values = useMemo(() => {
+    return userInfo.scoreArray.split('-').map((n) => Number(n));
   }, [userInfo]);
 
   const resultDom = userInfo.scoreArray.split('-').map((score, index) => {
@@ -130,7 +126,7 @@ const AnalysisPage: FunctionComponent<Props> = (props) => {
       </div>
       <Divider>成绩分布图</Divider>
       <div className="echarts-container">
-        <Chart nameList={nameList} valueList={valueList} />
+        <Chart nameList={names} valueList={values} />
       </div>
       <Divider>成绩分析</Divider>
       <div className="result">{resultDom}</div>

@@ -1,7 +1,7 @@
 import { Form, Input, Button } from 'antd';
 import { connect, history, Loading, getDvaApp, useDispatch } from 'umi';
 import { UserStateType } from '@/models/user';
-import styles from './login.less';
+import './login.less';
 import { HttpResponse } from '@/@types/api';
 import Cookies from 'js-cookie';
 
@@ -36,18 +36,7 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
     wrapperCol: { span: 16 },
   };
   const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
-  };
-
-  // 登陆成功之后的 callback
-  const submitCallback = (res: HttpResponse<UserStateType>) => {
-    console.log('ahahahaha');
-    if (res?.status === 200) {
-      if (res.data.resultCode === 0) {
-        Cookies.set('token', res.data.data.token);
-        history.push('/home');
-      }
-    }
+    wrapperCol: { offset: 0, span: 16 },
   };
 
   // 登录事件
@@ -71,8 +60,8 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
     console.log('Failed:', errorInfo);
   };
   return (
-    <div className={styles.login_container}>
-      <h2>登录</h2>
+    <div className="login_container">
+      <h2 style={{ color: '#fff' }}>登录</h2>
       <Form
         {...layout}
         name="basic"
@@ -81,6 +70,7 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
+          style={{ color: '#fff' }}
           label="Username"
           name="username"
           initialValue="白唯"
@@ -90,7 +80,6 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
         </Form.Item>
 
         <Form.Item
-          style={{ marginTop: '20px' }}
           initialValue="admin"
           label="Password"
           name="password"
@@ -101,8 +90,11 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
 
         <Form.Item {...tailLayout}>
           <Button
-            type="primary"
+            type="default"
             htmlType="submit"
+            shape="round"
+            block
+            size="large"
             loading={loading.models.user}
           >
             登录
