@@ -29,14 +29,12 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
 
   const dispatch = useDispatch();
 
-  console.log(props);
-
   const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
+    labelCol: { span: 24 },
+    wrapperCol: { span: 24 },
   };
   const tailLayout = {
-    wrapperCol: { offset: 0, span: 16 },
+    wrapperCol: { offset: 0, span: 24 },
   };
 
   // 登录事件
@@ -64,45 +62,52 @@ const UserLoginPage: React.FunctionComponent<UserLoginPageProps> = (props) => {
       <h2 style={{ color: '#fff' }}>登录</h2>
       <Form
         {...layout}
+        style={{ width: '80%' }}
         name="basic"
+        layout="vertical"
         initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
           style={{ color: '#fff' }}
-          label="Username"
+          label="用户名"
           name="username"
           initialValue="白唯"
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[{ required: true, message: '请输入用户名!' }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
           initialValue="admin"
-          label="Password"
+          label="密码"
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[{ required: true, message: '请输入密码' }]}
         >
           <Input.Password />
         </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          <Button
-            type="default"
-            htmlType="submit"
-            shape="round"
-            block
-            size="large"
-            loading={loading.models.user}
-          >
-            登录
-          </Button>
-        </Form.Item>
+        <Button
+          type="default"
+          htmlType="submit"
+          shape="round"
+          block
+          size="large"
+          loading={loading.models.user}
+        >
+          登录
+        </Button>
       </Form>
     </div>
   );
+};
+
+const creator = {
+  login: () => ({
+    type: 'skk',
+    payload: {},
+  }),
 };
 
 export default connect(mapStateToProps)(UserLoginPage);

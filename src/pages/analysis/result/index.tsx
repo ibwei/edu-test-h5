@@ -14,6 +14,7 @@ export interface Props {
 
 const AnalysisPage: FunctionComponent<Props> = (props) => {
   const { location, question } = props;
+
   const [userInfo, setUserInfo] = useState<HistoryItem>({
     allScore: 0,
     answerArray: '',

@@ -1,5 +1,5 @@
 const DEVELOPMENT_ENV = {
-  baseUrl: 'http://www.xscs.pinxianhs.com/api/',
+  baseUrl: 'http://www.educationtest.pinxianhs.com/api',
   NODE_ENV: 'development',
 };
 

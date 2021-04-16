@@ -1,4 +1,3 @@
-import { PRODUCTION_ENV } from './src/config/env.production';
 import { DEVELOPMENT_ENV } from './src/config/env.development';
 import { defineConfig } from 'umi';
 import routes from './src/config/routes';
@@ -25,9 +24,13 @@ export default defineConfig({
       hack: `true; @import "~@/assets/css/theme/default.less";`,
     },
   },
+  devServer: {
+    host: '127.0.0.1',
+    port: 9000,
+  },
   proxy: {
     '/api': {
-      target: PRODUCTION_ENV.baseUrl,
+      target: 'http://127.0.0.1:3000/api/',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },

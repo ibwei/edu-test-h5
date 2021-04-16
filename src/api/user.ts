@@ -27,18 +27,19 @@ class UserService {
   static async login(
     params: LoginParams,
   ): Promise<HttpResponse<UserStateType>> {
-    return Axios('/user/login', {
+    return Axios({
+      url: '/user/login',
       method: 'post',
       responseType: 'json',
-      data: params,
+      params,
     });
   }
 
   // 获取用户的历史提交记录
   static async submitHistory(params: HttpRequest) {
     return Axios({
-      url: '/wechat/test/history',
-      method: 'post',
+      url: '/test',
+      method: 'get',
       responseType: 'json',
       data: {
         ...params,

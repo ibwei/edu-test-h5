@@ -32,7 +32,7 @@ export interface SubmitTestParams {
 class QuestionService {
   // 获取测试试题
   static async getTestQuestionList(): Promise<HttpResponse<QuestionItem[]>> {
-    return Axios('/h5/test/list', {
+    return Axios('/question', {
       method: 'get',
       responseType: 'json',
     });
@@ -40,7 +40,7 @@ class QuestionService {
 
   // 获取版块列表
   static async getPartList(): Promise<HttpResponse<PartItem[]>> {
-    return Axios('/test/part/list', {
+    return Axios('/part', {
       method: 'get',
       responseType: 'json',
     });
@@ -50,7 +50,7 @@ class QuestionService {
   static async submitTest(
     data: SubmitTestParams,
   ): Promise<HttpResponse<PartItem[]>> {
-    return Axios('/h5/test/add', {
+    return Axios('/test', {
       method: 'post',
       responseType: 'json',
       data,

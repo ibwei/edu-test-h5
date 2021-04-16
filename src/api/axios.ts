@@ -66,12 +66,13 @@ const getErrorCode2text = (response: AxiosResponse): string => {
  * @example
  * service.get<{data: string; code: number}>('/test').then(({data}) => { console.log(data.code) })
  */
+
+console.log('ENV_CONFIG.baseUrl', ENV_CONFIG.baseUrl);
 const service = Axios.create({
   baseURL: ENV_CONFIG.baseUrl,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json;charset=utf-8',
-    withCredentials: true,
   },
 });
 
@@ -81,6 +82,10 @@ const service = Axios.create({
  */
 service.interceptors.request.use(async (config: AxiosRequestConfig) => {
   config.params = { ...config.params, token: Cookies.get('token') };
+  config.headers = {
+    ...config.headers,
+    Authorization: `Bearer ${Cookies.get('token')}`,
+  };
   return config;
 });
 
@@ -105,6 +110,7 @@ service.interceptors.response.use(
   (error: AxiosError) => {
     // 优先处理超时的情况
     let __emsg = '';
+    console.log('error', error?.response);
     if (error?.message?.indexOf('timeout') >= 0) {
       __emsg = '请求已经超时，请稍后再试！';
       message.error(__emsg);
@@ -112,11 +118,11 @@ service.interceptors.response.use(
     }
 
     // 处理服务器异常的情况
-    __emsg = getErrorCode2text(error.response as any);
+    __emsg = getErrorCode2text(error?.response as any);
     console.log(error.response?.data);
     if (
       error?.response?.status === 401 ||
-      error?.response?.data.message === 'Token has expired'
+      error?.response?.data?.message === 'Token has expired'
     ) {
       message.info('登录凭证已过期，请重新登录！');
       history.push('/user/login');

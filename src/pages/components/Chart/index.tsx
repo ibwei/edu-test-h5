@@ -10,8 +10,7 @@ import {
 } from 'echarts/components';
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
 import { CanvasRenderer } from 'echarts/renderers';
-import { FunctionComponent, useState } from 'react';
-import { useEffect } from 'react';
+import { FunctionComponent, memo, useEffect } from 'react';
 import './index.less';
 
 // 注册必须的组件
@@ -80,4 +79,4 @@ const Chart: FunctionComponent<ChartProps> = (props) => {
   return <div id="chart-container"></div>;
 };
 
-export default Chart;
+export default memo(Chart);

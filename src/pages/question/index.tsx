@@ -14,6 +14,7 @@ interface QuestionPageProps {
 
 const QuestionPage: FunctionComponent<QuestionPageProps> = (props) => {
   const { question } = props;
+  console.log('props', props);
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(true);
